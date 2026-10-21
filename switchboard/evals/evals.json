@@ -1,0 +1,99 @@
+{
+  "skill_name": "switchboard",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Dry run only. Delegate independent documentation edits in /tmp/delegation-fixture: Claude using sonnet should fix README.md heading levels; Cursor using composer-2.5 should correct spelling in CONTRIBUTING.md. My personal Claude configuration is /tmp/claude-personal. Do not launch workers, make network calls, or change files. Show launch templates and explain integration and verification.",
+      "expected_output": "Dry-run plan for two isolated editing workers with the given config and models.",
+      "expectations": [
+        "Preserves /tmp/claude-personal, sonnet, and composer-2.5 without claiming model access.",
+        "Uses separate checkouts and explains uncommitted changes are absent.",
+        "Does not launch workers, health checks, or model-listing calls.",
+        "Uses no permission bypass flags."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Ask my work Claude account to review README read-only. No mapping for the work account is available.",
+      "expected_output": "Asks for the work account directory instead of guessing.",
+      "expectations": [
+        "Resolves the account directory before launching instead of inventing ~/.claude-work.",
+        "Does not substitute the default account."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Review README with Claude. Simulated execution returns an expired OAuth error after auth status reported logged in. Do not run real commands.",
+      "expected_output": "Reports the auth failure with login guidance; no retry or login.",
+      "expectations": [
+        "Treats the request failure as authoritative.",
+        "Reports authentication failure and gives login guidance for the selected configuration.",
+        "Does not retry with another account or perform login."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Use Cursor to implement a small fix in /tmp/delegation-fixture. Simulated installed help has no auto-review option and headless writes require --force. Do not run real commands.",
+      "expected_output": "Falls back to a patch proposal instead of --force.",
+      "expectations": [
+        "Does not invent an unsupported flag or use --force.",
+        "Offers analysis or a patch proposal for orchestrator review and application.",
+        "Does not claim implementation succeeded."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Explain how you would review uncommitted changes with Claude in a host where escalation is prohibited. Do not launch anything.",
+      "expected_output": "Read-only review of the dirty checkout without unconditional escalation.",
+      "expectations": [
+        "Does not request require_escalated or claim every host needs escalation.",
+        "Uses the dirty original checkout read-only or a reviewed diff rather than assuming a new worktree includes changes.",
+        "Distinguishes tool restrictions from OS isolation."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Review a simulated Claude result with exit code zero, is_error false, permission denials, and modelUsage containing two model IDs. The worker claims all tests passed but provides no test output. Do not run real commands.",
+      "expected_output": "Verifies misleading success metadata instead of trusting it.",
+      "expectations": [
+        "Inspects denials and actual artifacts before claiming completion.",
+        "Reports model observations without inventing a single resolved model.",
+        "Separates reported tests from independently verified tests."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Delegate analysis using my existing Claude API-key setup behind a corporate proxy. No alternate account was requested. Do not execute commands.",
+      "expected_output": "Keeps the existing API-key and proxy environment.",
+      "expectations": [
+        "Preserves configured authentication and required proxy or certificate environment.",
+        "Does not unconditionally use env -i or remove API credentials.",
+        "Omits model selection when none was requested."
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Dry run only. Delegate to Claude a fix for the empty-input bug in src/slug.py in /tmp/delegation-fixture. The only permitted edit is src/slug.py; tests/test_slug.py already covers the bug. Use the configured account and model. Assume a clean trusted Git checkout, a verified Claude executable at /opt/bin/claude, and installed help supporting tools, allowedTools, strict-mcp-config, permission-mode acceptEdits, permission-prompts none, and JSON output. Verification is python -m pytest tests/test_slug.py. Show the worker launch and how you will verify it. Do not execute commands or change files.",
+      "expected_output": "Concrete bounded Claude edit launch with orchestrator verification.",
+      "expectations": [
+        "Proposes a concrete Claude editing command with an explicit tool set and supported edit permissions.",
+        "Supplies the exact permitted file, objective, and verification command to the worker.",
+        "Preserves the configured account and model.",
+        "Either restricts shell access to the needed check or leaves shell unavailable and runs verification in the orchestrator.",
+        "Inspects the diff and independently runs the specified check before accepting completion.",
+        "Does not execute commands or claim that the fix or test has succeeded."
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Dry run only. Ask Codex to review the uncommitted changes in /tmp/delegation-fixture read-only. Use model gpt-5.5 and my work Codex home at /tmp/codex-work. Do not launch workers or run commands.",
+      "expected_output": "Read-only Codex review of the dirty checkout with the given home and model.",
+      "expectations": [
+        "Sets CODEX_HOME=/tmp/codex-work and passes gpt-5.5 exactly, without claiming model access.",
+        "Uses a read-only Codex sandbox and no bypass or danger-full-access flags.",
+        "Reviews the original checkout rather than a new worktree that would lack uncommitted changes.",
+        "Does not launch workers, run login status, or list models."
+      ]
+    }
+  ]
+}
