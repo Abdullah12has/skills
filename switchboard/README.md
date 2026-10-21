@@ -20,4 +20,6 @@ The skill uses each CLI's own permission controls and refuses bypass flags. Only
 
 ## Evals
 
-[evals/evals.json](evals/evals.json) holds simulated scenarios; [evals/results.md](evals/results.md) has the latest run. The results file also records a live smoke run of all three CLIs.
+[evals/evals.json](evals/evals.json) holds simulated scenarios. To run them, give fresh evaluators SKILL.md and the prompts only, keep expectations with the grader, and block real CLI launches.
+
+Last checked live against codex-cli 0.163.0, Claude Code, and Cursor Agent on macOS, October 2026.
